@@ -154,7 +154,3 @@ MIT License - 随便用，别告我。
 ---
 
 **Made with ❤️, NvChad, and 5 块钱的 API 费.**
-
-```
-
-```
