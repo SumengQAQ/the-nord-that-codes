@@ -1,0 +1,39 @@
+# 敏感信息（Codeium、GitHub Copilot 等）
+codeium/
+copilot/
+*.token
+*.key
+.env
+
+# 插件管理器缓存
+lazy-lock.json.backup
+lazy.log
+
+# Neovim 运行时文件
+*.swp
+*.swo
+*~
+*.log
+*.pid
+*.seed
+*.pid.lock
+
+# LSP 缓存
+lsp/
+mason/
+
+# DAP 调试缓存
+dap/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*.tmp
+*.temp
+*.bak*
+
+# 测试文件
+test-*.lua
+debug-*.lua
