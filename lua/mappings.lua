@@ -7,6 +7,9 @@ local map = vim.keymap.set
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
+-- 普通模式减少缩进快捷键
+map("n", "<leader><", "<<", { desc = "deindent line" })
+
 -- Windows 风格快捷键
 -- 全选
 map("n", "<C-a>", "gg0vG$y", { desc = "select all" })
@@ -63,29 +66,30 @@ map("n", "<C-t>", function()
   require("menu").open("default")
 end, { desc = "Open menu" })
 
--- C/C++ 编译运行快捷键
--- 编译当前文件
-map("n", "<leader>cc", function()
+-- 运行脚本（智能判断文件类型）
+map("n", "<leader>r", function()
+  local ft = vim.bo.filetype
   local file = vim.fn.expand("%")
-  local output = vim.fn.expand("%:r")
-  vim.cmd("!gcc " .. file .. " -o " .. output .. " -Wall -g")
-end, { desc = "compile C file" })
-
--- 编译并运行当前文件
-map("n", "<leader>cr", function()
-  local file = vim.fn.expand("%")
-  local output = vim.fn.expand("%:r")
-  vim.cmd("!gcc " .. file .. " -o " .. output .. " -Wall -g && ./" .. output)
-end, { desc = "compile and run C file" })
-
--- 仅运行（假设已编译）
-map("n", "<leader>rr", function()
-  local output = "./" .. vim.fn.expand("%:r")
-  vim.cmd("!" .. output)
-end, { desc = "run compiled program" })
+  
+  -- 先保存文件
+  vim.cmd("write")
+  
+  if ft == "python" then
+    -- 使用水平分割终端运行 Python 文件
+    vim.cmd("belowright split | resize 10 | term python3 " .. vim.fn.fnameescape(file))
+  elseif ft == "c" or ft == "cpp" then
+    local base = vim.fn.expand("%:r")
+    vim.cmd("belowright split | resize 10 | term gcc " .. vim.fn.fnameescape(file) .. " -o " .. vim.fn.fnameescape(base) .. " && ./" .. vim.fn.fnameescape(base))
+  elseif ft == "javascript" then
+    vim.cmd("belowright split | resize 10 | term node " .. vim.fn.fnameescape(file))
+  else
+    print("Unsupported filetype: " .. ft)
+  end
+end, {     desc = "run program" })
+map("n", "<leader>er", "<cmd>lua vim.lsp.buf.rename()<CR>", { desc = "rename" })
 
 -- 测试工具
-map("n", "<leader>tt", function()
+map("n", "<leader>tr", function()
   require("neotest").run.run()
 end, { desc = "test run" })
 map("n", "<leader>tf", function()
@@ -99,8 +103,67 @@ end, { desc = "test summary" })
 map("n", "gcc", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", { desc = "toggle comment line" })
 map("x", "gc", "<cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", { desc = "toggle comment selection" })
 
--- 代码检查
-map("n", "<leader>ll", "<cmd>Lint<CR>", { desc = "run linter" })
-
+-- 便签工具 (fusen.nvim)
+local fusen = require("fusen")
+map("n", "<leader>na", fusen.add_mark, { desc = "add note" })
+map("n", "<leader>nc", fusen.clear_mark, { desc = "clear note" })
+map("n", "<leader>nC", fusen.clear_buffer, { desc = "clear buffer notes" })
+map("n", "<leader>nn", fusen.next_mark, { desc = "next note" })
+map("n", "<leader>np", fusen.prev_mark, { desc = "prev note" })
+map("n", "<leader>nl", fusen.list_marks, { desc = "list notes" })
 -- 颜色高亮
 map("n", "<leader>uc", "<cmd>ColorizerToggle<CR>", { desc = "toggle colorizer" })
+
+-- 删除 NvChad 默认的快捷键
+pcall(vim.keymap.del, "n", "<leader>ch")
+pcall(vim.keymap.del, "n", "<leader>cm")
+pcall(vim.keymap.del, "n", "<leader>D")
+pcall(vim.keymap.del, "n", "<leader>b")
+pcall(vim.keymap.del, "n", "<leader>x")
+pcall(vim.keymap.del, "n", "<leader>gt")
+pcall(vim.keymap.del, "n", "<leader>ds")
+pcall(vim.keymap.del, "n", "<leader>e")
+pcall(vim.keymap.del, "n", "<leader>fm")
+pcall(vim.keymap.del, "n", "<leader>ma")
+pcall(vim.keymap.del, "n", "<leader>pt")
+pcall(vim.keymap.del, "n", "<leader>rn")
+pcall(vim.keymap.del, "n", "<leader>uc")
+pcall(vim.keymap.del, "n", "<leader>wK")
+pcall(vim.keymap.del, "n", "<leader>wk")
+pcall(vim.keymap.del, "n", "<leader>th")
+pcall(vim.keymap.del, "n", "<leader><")
+
+-- Git 操作
+-- 已移至上面统一的 pcall 删除块
+map("n", "<leader>gs", "<cmd>Telescope git_status<CR>", { desc = "git status" })
+map("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "git terminal" })
+map("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", { desc = "git commits" })
+map("n", "<leader>gb", "<cmd>Telescope git_branches<CR>", { desc = "git branches" })
+map("n", "<leader>gd", "<cmd>DiffviewOpen<CR>", { desc = "git diff view" })
+map("n", "<leader>gl", "<cmd>Telescope git_log<CR>", { desc = "git log" })
+
+-- which-key 分组描述
+require("which-key").add({
+  { "<leader>a", group = "AI", icon = { icon = "󰭹 ", color = "cyan" } },
+  { "<leader>u", group = "undo", icon = { icon = " ", color = "cyan" } },
+  { "<leader>c", group = "todo", icon = { icon = " ", color = "cyan" } },
+  { "<leader>d", group = "debug" },
+  { "<leader>e", group = "edit", icon = { icon = " ", color = "cyan" } },
+  { "<leader>f", group = "telescope" },
+  { "<leader>g", group = "git" },
+  { "<leader>n", group = "note", icon = { icon = "󰈐 ", color = "yellow" } },
+  { "<leader>r", group = "run", icon = { icon = "▶ ", color = "green" } },
+  { "<leader>t", group = "test", icon = { icon = " ", color = "green" } },
+})
+
+-- TODO 注释管理
+map("n", "<leader>ct", "<cmd>TodoTelescope<CR>", { desc = "find todos" })
+map("n", "<leader>cl", "<cmd>TodoLocList<CR>", { desc = "find todo loclist" })
+map("n", "<leader>cq", "<cmd>TodoQuickFix<CR>", { desc = "todo quickfix" })
+map("n", "<leader>cb", "<cmd>TodoTelescope keywords=TODO,BUG,FIX,HACK,WARN,PERF,NOTE,TEST<CR>", { desc = "find todo browse" })
+map("n", "<leader>cn", function()
+  require("todo-comments").jump_next()
+end, { desc = "find next todo" })
+map("n", "<leader>cp", function()
+  require("todo-comments").jump_prev()
+end, { desc = "find prev todo" })

@@ -1,32 +1,48 @@
--- This file needs to have same structure as nvconfig.lua 
+-- This file needs to have same structure as nvconfig.lua
 -- https://github.com/NvChad/ui/blob/v3.0/lua/nvconfig.lua
--- Please read that file to know all available options :( 
+-- Please read that file to know all available options :(
 
 ---@type ChadrcConfig
 local M = {}
 
 M.base46 = {
-	theme = "nord",
+  theme = "nord",
 }
 
 M.ui = {
-	statusline = {
-		theme = "vscode_colored",
-		separator_style = "default",
-	},
+  statusline = {
+    theme = "vscode_colored",
+    separator_style = "default",
+  },
 }
 
 M.term = {
-	float = {
-		relative = "editor",
-		row = 0.3,
-		col = 0.25,
-		width = 0.5,
-		height = 0.4,
-		border = "rounded",
-	},
+  float = {
+    relative = "editor",
+    row = 0.3,
+    col = 0.25,
+    width = 0.5,
+    height = 0.4,
+    border = "rounded",
+  },
 }
 
--- M.nvdash = { load_on_startup = true }
+M.nvdash = {
+  load_on_startup = true,
+  header = {
+    "  ██████   █████                        █████ ",
+    " ░░██████ ░░███                        ░░███  ",
+    "  ░███░███ ░███   ██████  ████████   ███████  ",
+    "  ░███░░███░███  ███░░███░░███░░███ ███░░███  ",
+    "  ░███ ░░██████ ░███ ░███ ░███ ░░░ ░███ ░███  ",
+    "  ░███  ░░█████ ░███ ░███ ░███     ░███ ░███  ",
+    "  █████  ░░█████░░██████  █████    ░░████████ ",
+    " ░░░░░    ░░░░░  ░░░░░░  ░░░░░      ░░░░░░░░  ",
+    "",
+    "",
+    "",
+    "",
+  },
+}
 
 return M

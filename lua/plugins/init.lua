@@ -23,11 +23,11 @@ return {
   -- 数据库工具
   {
     "tpope/vim-dadbod",
-    ft = { "sql", "mysql", "pgsql" },
   },
 
   {
     "kristijanhusak/vim-dadbod-ui",
+    dependencies = "tpope/vim-dadbod",
     cmd = { "DBUI", "DBUIToggle" },
     config = function()
       vim.g.db_ui = {
@@ -272,9 +272,7 @@ return {
         char = "│",
       },
       scope = {
-        enabled = true,
-        show_start = true,
-        show_end = true,
+        enabled = false,
       },
       exclude = {
         filetypes = {
@@ -286,6 +284,44 @@ return {
         },
       },
     },
+  },
+
+  -- 缩进作用域动画 (独立于 indent-blankline)
+  {
+    "echasnovski/mini.indentscope",
+    event = "BufReadPost",
+    version = false,
+    config = function()
+      vim.api.nvim_set_hl(0, "MiniIndentscopeSymbol", { fg = "#88C0D0" })
+      require("mini.indentscope").setup({
+        draw = {
+          delay = 30,
+          animation = require("mini.indentscope").gen_animation.linear({ duration = 25, unit = "step" }),
+          priority = 200,
+        },
+        symbol = "│",
+        options = {
+          border = "both",
+          indent_at_cursor = true,
+        },
+      })
+    end,
+  },
+
+  -- 光标跳转高亮追踪 (替代 specs.nvim，兼容 Neovim 0.11+)
+  {
+    "stonelasley/flare.nvim",
+    event = "CursorMoved",
+    config = function()
+      require("flare").setup({
+        enabled = true,
+        x_threshold = 10,  -- 水平跳转超过10列触发
+        y_threshold = 10,   -- 垂直跳转超过10行触发
+        fade = true,         -- 启用淡出动画
+        timeout = 200,      -- 淡出时间(ms)
+        hl_group = "CursorLine",  -- 高亮样式
+      })
+    end,
   },
 
   -- 单词高亮
@@ -431,6 +467,59 @@ return {
     end,
   },
 
+  -- 光标拖影效果 (smear-cursor)
+  {
+    "sphamba/smear-cursor.nvim",
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {
+      smear_between_buffers = true,
+      hide_target_hack = true,
+      cursor_color = "none",
+      smear_to_cmd = true,
+    },
+  },
+
+  -- 迷你动画 (mini.animate) - 禁用cursor避免与smear-cursor冲突
+  {
+    "nvim-mini/mini.animate",
+    version = false,
+    config = function()
+      require("mini.animate").setup({
+        cursor = {
+          enable = false,  -- 禁用！因为smear-cursor已经处理光标动画
+        },
+        scroll = {
+          enable = true,
+          timing = require("mini.animate").gen_timing.linear({
+            duration = 250,
+            unit = "total",
+          }),
+        },
+        resize = {
+          enable = true,
+          timing = require("mini.animate").gen_timing.linear({
+            duration = 200,
+            unit = "total",
+          }),
+        },
+        open = {
+          enable = true,
+          timing = require("mini.animate").gen_timing.linear({
+            duration = 250,
+            unit = "total",
+          }),
+        },
+        close = {
+          enable = true,
+          timing = require("mini.animate").gen_timing.linear({
+            duration = 200,
+            unit = "total",
+          }),
+        },
+      })
+    end,
+  },
+
   -- 光标行动画（闪烁效果）
   {
     "xiyaowong/nvim-cursorword",
@@ -450,6 +539,75 @@ return {
     "nvim-zh/colorful-winsep.nvim",
     config = true,
     event = { "WinNew" },
+  },
+
+  -- CodeCompanion AI 聊天
+  {
+    "olimorris/codecompanion.nvim",
+    cmd = { "CodeCompanion", "CodeCompanionActions", "CodeCompanionChat", "CodeCompanionCmd" },
+    keys = {
+      { "<leader>aa", "<cmd>CodeCompanionActions<CR>", desc = "AI Actions" },
+      { "<leader>ac", "<cmd>CodeCompanionChat<CR>", desc = "AI Chat" },
+      { "<leader>ai", ":'<,'>CodeCompanion<CR>", desc = "AI Inline", mode = "v" },
+    },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("codecompanion").setup({
+        adapters = {
+          http = {
+            deepseek = function()
+              return require("codecompanion.adapters").extend("deepseek", {
+                env = {
+                  api_key = "DEEPSEEK_API_KEY",
+                },
+                schema = {
+                  model = {
+                    default = "deepseek-chat",
+                  },
+                },
+              })
+            end,
+          },
+        },
+        interactions = {
+          chat = {
+            adapter = "deepseek",
+          },
+          inline = {
+            adapter = "deepseek",
+          },
+        },
+      })
+    end,
+  },
+
+  -- Telescope 按使用频率排序
+  {
+    "nvim-telescope/telescope-frecency.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    config = function()
+      require("telescope").load_extension("frecency")
+    end,
+  },
+
+  -- Undo 树形可视化
+  {
+    "mbbill/undotree",
+    keys = {
+      { "<leader>u", "<cmd>UndotreeToggle<CR>", desc = "undo tree" },
+    },
+  },
+
+  -- Git Diff 可视化
+  {
+    "sindrets/diffview.nvim",
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
+    keys = {
+      { "<leader>gd", "<cmd>DiffviewOpen<CR>", desc = "git diff view" },
+    },
   },
 
   -- ========== 阶段四美化插件：主题增强 ==========
@@ -498,6 +656,77 @@ return {
     config = function()
       require("codeium").setup({
         enable_chat = false,
+      })
+    end,
+  },
+
+  -- Lazygit 整合
+  {
+    "kdheepak/lazygit.nvim",
+    cmd = {
+      "LazyGit",
+      "LazyGitConfig",
+      "LazyGitCurrentFile",
+      "LazyGitFilter",
+      "LazyGitFilterAuthor",
+    },
+    keys = {
+      { "<leader>gg", "<cmd>LazyGit<CR>", desc = "lazygit" },
+    },
+  },
+
+  -- TODO 注释高亮和管理
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    event = { "BufReadPost", "BufNewFile" },
+    config = function()
+      require("todo-comments").setup({
+        signs = true, -- 在行号列显示图标
+        sign_priority = 8,
+        keywords = {
+          FIX = {
+            icon = " ", -- 图标
+            color = "error", -- 颜色
+            alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- 替代词
+          },
+          TODO = { icon = " ", color = "info" },
+          HACK = { icon = " ", color = "warning" },
+          WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+          PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+          NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+          TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+        },
+        highlight = {
+          multiline = true, -- 多行注释
+          multiline_pattern = "^.", -- 模式
+          multiline_context = 10, -- 上下文行数
+          before = "", -- 高亮前字符
+          keyword = "wide", -- "fg", "bg", "wide", "wide_bg"
+          after = "fg", -- "fg", "bg", "wide"
+          pattern = [[.*<(KEYWORDS)\s*:]], -- 匹配模式
+          comments_only = true, -- 只高亮注释中的TODO
+          max_line_len = 400, -- 最大行长度
+          exclude = {}, -- 排除的文件类型
+        },
+        colors = {
+          error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
+          warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
+          info = { "DiagnosticInfo", "#2563EB" },
+          hint = { "DiagnosticHint", "#10B981" },
+          default = { "Identifier", "#7C3AED" },
+        },
+        search = {
+          command = "rg", -- 使用的搜索命令
+          args = {
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+          },
+          pattern = [[\b(KEYWORDS):]], -- 搜索模式
+        },
       })
     end,
   },
