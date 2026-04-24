@@ -56,7 +56,10 @@ map("n", "<leader>di", ":lua require('dap').step_into()<CR>", { desc = "debug st
 map("n", "<leader>dj", ":lua require('dap').step_out()<CR>", { desc = "debug step out" })
 map("n", "<leader>dt", ":lua require('dap').toggle_breakpoint()<CR>", { desc = "debug toggle breakpoint" })
 map("n", "<leader>dl", ":lua require('dap').list_breakpoints()<CR>", { desc = "debug list breakpoints" })
--- du 已在插件配置中覆写（先关文件树再开调试UI，保持文件树在最左侧）
+-- du 调试UI开关（先关文件树再开调试UI，保持文件树在最左侧）
+map("n", "<leader>du", function()
+  require("dapui").toggle()
+end, { desc = "debug ui toggle" })
 
 -- Menu 菜单
 map({ "n", "v" }, "<RightMouse>", function()

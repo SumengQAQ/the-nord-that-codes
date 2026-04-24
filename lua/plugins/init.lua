@@ -34,7 +34,7 @@ return {
     "MeanderingProgrammer/render-markdown.nvim",
     ft = { "markdown" },
     config = function()
-      require("render-markdown").setup({})
+      require("render-markdown").setup {}
     end,
   },
 
@@ -115,12 +115,12 @@ return {
   {
     "mfussenegger/nvim-dap",
     config = function()
-      local dap = require("dap")
-      
+      local dap = require "dap"
+
       -- Python调试适配器
       dap.adapters.python = {
         type = "executable",
-        command = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python",
+        command = vim.fn.stdpath "data" .. "/mason/packages/debugpy/venv/bin/python",
         args = { "-m", "debugpy.adapter" },
       }
 
@@ -130,7 +130,7 @@ return {
         host = "localhost",
         port = "${port}",
         executable = {
-          command = vim.fn.stdpath("data") .. "/mason/packages/codelldb/codelldb",
+          command = vim.fn.stdpath "data" .. "/mason/packages/codelldb/codelldb",
           args = { "--port", "${port}" },
         },
       }
@@ -141,15 +141,10 @@ return {
           type = "python",
           request = "launch",
           name = "调试当前文件",
-          program = function()
-            -- 调试前先保存文件，确保路径正确
-            vim.cmd("write")
-            return vim.fn.expand("%:p")
-          end,
+          program = "${file}",
           pythonPath = function()
-            return vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
+            return vim.fn.stdpath "data" .. "/mason/packages/debugpy/venv/bin/python"
           end,
-          cwd = "${workspaceFolder}",
         },
       }
 
@@ -190,14 +185,14 @@ return {
     "rcarriga/nvim-dap-ui",
     dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
     config = function()
-      local dapui = require("dapui")
-      dapui.setup({
+      local dapui = require "dapui"
+      dapui.setup {
         layouts = {
           {
             elements = {
-              { id = "scopes",      size = 0.40 },
-              { id = "stacks",      size = 0.30 },
-              { id = "watches",     size = 0.15 },
+              { id = "scopes", size = 0.40 },
+              { id = "stacks", size = 0.30 },
+              { id = "watches", size = 0.15 },
               { id = "breakpoints", size = 0.15 },
             },
             size = 0.22,
@@ -236,7 +231,7 @@ return {
             focusable = true,
           },
         },
-      })
+      }
     end,
   },
 
@@ -268,7 +263,7 @@ return {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     config = function()
-      require("nvim-autopairs").setup({})
+      require("nvim-autopairs").setup {}
     end,
   },
 
@@ -296,8 +291,6 @@ return {
     end,
   },
 
-  
-
   -- 测试框架
   {
     "nvim-neotest/neotest",
@@ -307,12 +300,12 @@ return {
       "nvim-neotest/neotest-jest",
     },
     config = function()
-      require("neotest").setup({
+      require("neotest").setup {
         adapters = {
-          require("neotest-python"),
-          require("neotest-jest"),
+          require "neotest-python",
+          require "neotest-jest",
         },
-      })
+      }
     end,
   },
 
@@ -320,8 +313,8 @@ return {
   {
     "nvim-neotest/neotest-jest",
     dependencies = "nvim-neotest/neotest",
-},
-  
+  },
+
   -- Python测试适配器
   {
     "nvim-neotest/neotest-python",
@@ -351,8 +344,6 @@ return {
       },
       exclude = {
         filetypes = {
-          "dashboard",
-          "nvdash",
           "lazy",
           "help",
           "terminal",
@@ -368,10 +359,10 @@ return {
     version = false,
     config = function()
       vim.api.nvim_set_hl(0, "MiniIndentscopeSymbol", { fg = "#88C0D0" })
-      require("mini.indentscope").setup({
+      require("mini.indentscope").setup {
         draw = {
           delay = 30,
-          animation = require("mini.indentscope").gen_animation.linear({ duration = 25, unit = "step" }),
+          animation = require("mini.indentscope").gen_animation.linear { duration = 25, unit = "step" },
           priority = 200,
         },
         symbol = "│",
@@ -379,7 +370,7 @@ return {
           border = "both",
           indent_at_cursor = true,
         },
-      })
+      }
     end,
   },
 
@@ -388,14 +379,14 @@ return {
     "stonelasley/flare.nvim",
     event = "CursorMoved",
     config = function()
-      require("flare").setup({
+      require("flare").setup {
         enabled = true,
-        x_threshold = 10,  -- 水平跳转超过10列触发
-        y_threshold = 10,   -- 垂直跳转超过10行触发
-        fade = true,         -- 启用淡出动画
-        timeout = 200,      -- 淡出时间(ms)
-        hl_group = "CursorLine",  -- 高亮样式
-      })
+        x_threshold = 10, -- 水平跳转超过10列触发
+        y_threshold = 10, -- 垂直跳转超过10行触发
+        fade = true, -- 启用淡出动画
+        timeout = 200, -- 淡出时间(ms)
+        hl_group = "CursorLine", -- 高亮样式
+      }
     end,
   },
 
@@ -404,15 +395,18 @@ return {
     "RRethy/vim-illuminate",
     event = { "BufReadPost", "BufNewFile" },
     config = function()
-      require("illuminate").configure({
-        delay = 200,  -- 延迟200ms后高亮
-        under_cursor = true,  -- 光标下的单词
+      require("illuminate").configure {
+        delay = 200, -- 延迟200ms后高亮
+        under_cursor = true, -- 光标下的单词
         providers = { "lsp", "treesitter", "regex" },
         filetypes_denylist = {
-          "dashboard", "nvdash", "neo-tree", "trouble",
-          "terminal", "TelescopePrompt", "NvimTree",
+          "neo-tree",
+          "trouble",
+          "terminal",
+          "TelescopePrompt",
+          "NvimTree",
         },
-      })
+      }
     end,
   },
 
@@ -420,15 +414,15 @@ return {
   {
     "rcarriga/nvim-notify",
     config = function()
-      local notify = require("notify")
-      
+      local notify = require "notify"
+
       -- 设置notify为默认通知系统
       vim.notify = notify
-      
-      notify.setup({
-        stages = "fade_in_slide_out",  -- 动画效果
-        timeout = 3000,  -- 显示3秒
-        background_colour = "#2E3440",  -- Nord背景色
+
+      notify.setup {
+        stages = "fade_in_slide_out", -- 动画效果
+        timeout = 3000, -- 显示3秒
+        background_colour = "#2E3440", -- Nord背景色
         icons = {
           ERROR = "",
           WARN = "",
@@ -439,7 +433,7 @@ return {
         level = vim.log.levels.INFO,
         render = "default",
         top_down = true,
-      })
+      }
     end,
   },
 
@@ -450,13 +444,13 @@ return {
     "anuvyklack/windows.nvim",
     dependencies = {
       "anuvyklack/middleclass",
-      "anuvyklack/animation.nvim"
+      "anuvyklack/animation.nvim",
     },
     config = function()
       vim.o.winwidth = 10
       vim.o.winminwidth = 10
       vim.o.equalalways = false
-      require('windows').setup({
+      require("windows").setup {
         autowidth = {
           enable = false,
           winwidth = 50,
@@ -470,9 +464,9 @@ return {
           enable = true,
           duration = 300,
           fps = 60,
-          easing = "in_out_sine"
+          easing = "in_out_sine",
         },
-      })
+      }
     end,
   },
 
@@ -480,7 +474,7 @@ return {
   {
     "karb94/neoscroll.nvim",
     config = function()
-      require('neoscroll').setup({
+      require("neoscroll").setup {
         -- 隐藏滚动映射
         mappings = {},
         hide_cursor = true,
@@ -491,21 +485,21 @@ return {
         pre_hook = nil,
         post_hook = nil,
         performance_mode = false,
-      })
+      }
 
       -- 自定义滚动动画（更平滑）
       local t = {}
-      t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '350'}}
-      t['<C-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '350'}}
-      t['<C-b>'] = {'scroll', {'-vim.api.nvim_win_get_height(0)', 'true', '500'}}
-      t['<C-f>'] = {'scroll', { 'vim.api.nvim_win_get_height(0)', 'true', '500'}}
-      t['<C-y>'] = {'scroll', {'-0.10', 'false', '100'}}
-      t['<C-e>'] = {'scroll', { '0.10', 'false', '100'}}
-      t['zt']    = {'zt', {'250'}}
-      t['zz']    = {'zz', {'250'}}
-      t['zb']    = {'zb', {'250'}}
+      t["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", "350" } }
+      t["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", "350" } }
+      t["<C-b>"] = { "scroll", { "-vim.api.nvim_win_get_height(0)", "true", "500" } }
+      t["<C-f>"] = { "scroll", { "vim.api.nvim_win_get_height(0)", "true", "500" } }
+      t["<C-y>"] = { "scroll", { "-0.10", "false", "100" } }
+      t["<C-e>"] = { "scroll", { "0.10", "false", "100" } }
+      t["zt"] = { "zt", { "250" } }
+      t["zz"] = { "zz", { "250" } }
+      t["zb"] = { "zb", { "250" } }
 
-      require('neoscroll.config').set_mappings(t)
+      require("neoscroll.config").set_mappings(t)
     end,
   },
 
@@ -513,21 +507,21 @@ return {
   {
     "gen740/SmoothCursor.nvim",
     config = function()
-      require('smoothcursor').setup({
+      require("smoothcursor").setup {
         autostart = true,
-        cursor = "",  -- 自定义光标形状
-        texthl = "SmoothCursor",  -- 高亮组
+        cursor = "", -- 自定义光标形状
+        texthl = "SmoothCursor", -- 高亮组
         linehl = nil,
         type = "default",
         fancy = {
           enable = true,
-          head = { cursor = '▷', texthl = 'SmoothCursor', linehl = nil },
+          head = { cursor = "▷", texthl = "SmoothCursor", linehl = nil },
           body = {
-            { cursor = '󰝥', texthl = 'SmoothCursor' },
-            { cursor = '󰝥', texthl = 'SmoothCursor' },
-            { cursor = '󰝥', texthl = 'SmoothCursor' },
+            { cursor = "󰝥", texthl = "SmoothCursor" },
+            { cursor = "󰝥", texthl = "SmoothCursor" },
+            { cursor = "󰝥", texthl = "SmoothCursor" },
           },
-          tail = { cursor = nil, texthl = 'SmoothCursor' }
+          tail = { cursor = nil, texthl = "SmoothCursor" },
         },
         flyin_effect = "bottom",
         speed = 25,
@@ -537,8 +531,8 @@ return {
         threshold = 3,
         disable_float_win = false,
         enabled_filetypes = nil,
-        disabled_filetypes = { "neo-tree", "dashboard", "nvdash" },
-      })
+        disabled_filetypes = { "neo-tree" },
+      }
     end,
   },
 
@@ -559,39 +553,39 @@ return {
     "nvim-mini/mini.animate",
     version = false,
     config = function()
-      require("mini.animate").setup({
+      require("mini.animate").setup {
         cursor = {
-          enable = false,  -- 禁用！因为smear-cursor已经处理光标动画
+          enable = false, -- 禁用！因为smear-cursor已经处理光标动画
         },
         scroll = {
           enable = true,
-          timing = require("mini.animate").gen_timing.linear({
+          timing = require("mini.animate").gen_timing.linear {
             duration = 250,
             unit = "total",
-          }),
+          },
         },
         resize = {
           enable = true,
-          timing = require("mini.animate").gen_timing.linear({
+          timing = require("mini.animate").gen_timing.linear {
             duration = 200,
             unit = "total",
-          }),
+          },
         },
         open = {
           enable = true,
-          timing = require("mini.animate").gen_timing.linear({
+          timing = require("mini.animate").gen_timing.linear {
             duration = 250,
             unit = "total",
-          }),
+          },
         },
         close = {
           enable = true,
-          timing = require("mini.animate").gen_timing.linear({
+          timing = require("mini.animate").gen_timing.linear {
             duration = 200,
             unit = "total",
-          }),
+          },
         },
-      })
+      }
     end,
   },
 
@@ -601,10 +595,10 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     config = function()
       pcall(function()
-        require('nvim-cursorword').setup({
+        require("nvim-cursorword").setup {
           hlgroup = "CursorWord",
           timeout = 500,
-        })
+        }
       end)
     end,
   },
@@ -630,7 +624,7 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
     config = function()
-      require("codecompanion").setup({
+      require("codecompanion").setup {
         adapters = {
           http = {
             deepseek = function()
@@ -655,7 +649,7 @@ return {
             adapter = "deepseek",
           },
         },
-      })
+      }
     end,
   },
 
@@ -664,7 +658,7 @@ return {
     "nvim-telescope/telescope-frecency.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
     config = function()
-      require("telescope").load_extension("frecency")
+      require("telescope").load_extension "frecency"
     end,
   },
 
@@ -693,20 +687,20 @@ return {
     lazy = false,
     config = function()
       local nord = {
-        red    = "#BF616A",
+        red = "#BF616A",
         orange = "#D08770",
         yellow = "#EBCB8B",
-        green  = "#A3BE8C",
-        cyan   = "#88C0D0",
-        blue   = "#81A1C1",
+        green = "#A3BE8C",
+        cyan = "#88C0D0",
+        blue = "#81A1C1",
         violet = "#B48EAD",
       }
       local hl_groups = {
-        RainbowDelimiterRed    = { fg = nord.cyan },
+        RainbowDelimiterRed = { fg = nord.cyan },
         RainbowDelimiterYellow = { fg = nord.yellow },
-        RainbowDelimiterBlue   = { fg = nord.blue },
+        RainbowDelimiterBlue = { fg = nord.blue },
         RainbowDelimiterOrange = { fg = nord.orange },
-        RainbowDelimiterGreen  = { fg = nord.green },
+        RainbowDelimiterGreen = { fg = nord.green },
         RainbowDelimiterViolet = { fg = nord.violet },
       }
       for name, opts in pairs(hl_groups) do
@@ -715,8 +709,8 @@ return {
 
       vim.g.rainbow_delimiters = {
         strategy = { [""] = "rainbow-delimiters.strategy.global", vim = "rainbow-delimiters.strategy.local" },
-        query    = { [""] = "rainbow-delimiters", lua = "rainbow-blocks" },
-        priority = { [""] = 110,             lua = 210 },
+        query = { [""] = "rainbow-delimiters", lua = "rainbow-blocks" },
+        priority = { [""] = 110, lua = 210 },
         highlight = {
           "RainbowDelimiterRed",
           "RainbowDelimiterYellow",
@@ -732,15 +726,15 @@ return {
   -- Codeium AI 补全
   {
     "Exafunction/codeium.nvim",
-    event = { "BufReadPost", "BufNewFile" },  -- 打开文件时自动加载
+    event = { "BufReadPost", "BufNewFile" }, -- 打开文件时自动加载
     dependencies = {
       "nvim-lua/plenary.nvim",
       "hrsh7th/nvim-cmp",
     },
     config = function()
-      require("codeium").setup({
+      require("codeium").setup {
         enable_chat = false,
-      })
+      }
     end,
   },
 
@@ -765,7 +759,7 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     event = { "BufReadPost", "BufNewFile" },
     config = function()
-      require("todo-comments").setup({
+      require("todo-comments").setup {
         signs = true, -- 在行号列显示图标
         sign_priority = 8,
         keywords = {
@@ -811,11 +805,93 @@ return {
           },
           pattern = [[\b(KEYWORDS):]], -- 搜索模式
         },
-      })
+      }
     end,
   },
 
-  -- 中英文输入法自动切换 (WSL + Windows 输入法)
+  -- ========== 启动页 ==========
+  {
+    "nvimdev/dashboard-nvim",
+    event = "VimEnter",
+    config = function()
+      require("dashboard").setup {
+        theme = "hyper",
+        disable_move = true,
+        change_to_vcs_root = true,
+        shortcut_type = "letter",
+        hide = {
+          statusline = true,
+          tabline = true,
+          winbar = true,
+        },
+        config = {
+          header = {
+            "  ██████   █████                        █████ ",
+            " ░░██████ ░░███                        ░░███  ",
+            "  ░███░███ ░███   ██████  ████████   ███████  ",
+            "  ░███░░███░███  ███░░███░░███░░███ ███░░███  ",
+            "  ░███ ░░██████ ░███ ░███ ░███ ░░░ ░███ ░███  ",
+            "  ░███  ░░█████ ░███ ░███ ░███     ░███ ░███  ",
+            "  █████  ░░█████░░██████  █████    ░░████████ ",
+            " ░░░░░    ░░░░░  ░░░░░░  ░░░░░      ░░░░░░░░  ",
+            "",
+            os.date "%Y-%m-%d %H:%M",
+          },
+          week_header = {
+            enable = false,
+          },
+          shortcut = {
+            { desc = "󰊳 Update", group = "@property", action = "Lazy update", key = "u" },
+            { desc = " Files", group = "Label", action = "Telescope find_files", key = "f" },
+            { desc = " Recent", group = "Number", action = "Telescope oldfiles", key = "r" },
+            { desc = "󰈭 Word", group = "String", action = "Telescope live_grep", key = "w" },
+            { desc = " Config", group = "DiagnosticHint", action = "e $MYVIMRC", key = "c" },
+            { desc = "󰑓 Quit", group = "Special", action = "qa", key = "q" },
+          },
+          footer = { "", "https://github.com/SumengQAQ/the-nord-that-codes" },
+        },
+      }
+
+      local nord = {
+        cyan   = "#88C0D0",
+        blue   = "#81A1C1",
+        gray   = "#4C566A",
+        white  = "#D8DEE9",
+        green  = "#A3BE8C",
+        yellow = "#EBCB8B",
+        red    = "#BF616A",
+        purple = "#B48EAD",
+        orange = "#D08770",
+      }
+
+      vim.api.nvim_set_hl(0, "DashboardHeader", { fg = nord.cyan })
+      vim.api.nvim_set_hl(0, "DashboardFooter", { fg = nord.gray })
+      vim.api.nvim_set_hl(0, "DashboardMruTitle", { fg = nord.yellow })
+      vim.api.nvim_set_hl(0, "DashboardMruIcon", { fg = nord.blue })
+      vim.api.nvim_set_hl(0, "DashboardFiles", { fg = nord.white })
+      vim.api.nvim_set_hl(0, "DashboardShortCutIcon", { fg = nord.green })
+      vim.api.nvim_set_hl(0, "DashboardProjectTitle", { fg = nord.purple })
+      vim.api.nvim_set_hl(0, "DashboardProjectTitleIcon", { fg = nord.orange })
+      vim.api.nvim_set_hl(0, "DashboardProjectIcon", { fg = nord.blue })
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "dashboard",
+        callback = function()
+          vim.bo.bufhidden = "wipe"
+          vim.wo.cursorline = false
+          vim.wo.cursorcolumn = false
+          vim.wo.number = false
+          vim.wo.relativenumber = false
+          pcall(vim.api.nvim_set_option_value, "scrollbind", false, { scope = "local" })
+          vim.keymap.set("n", "<ScrollWheelDown>", "<Nop>", { buffer = true })
+          vim.keymap.set("n", "<ScrollWheelUp>", "<Nop>", { buffer = true })
+        end,
+      })
+    end,
+    dependencies = { { "nvim-tree/nvim-web-devicons" } },
+  },
+
+  -- ========== 中英文输入法自动切换 (WSL + Windows 输入法) ==========
   {
     "keaising/im-select.nvim",
     event = { "InsertEnter", "InsertLeave" },
@@ -824,16 +900,10 @@ return {
       -- 需要先下载 im-select.exe 放到 Windows PATH 中
       -- 下载地址: https://github.com/daipeihust/im-select/raw/master/win64/im-select.exe
       -- 放在 C:\Windows\System32\im-select.exe
-      require("im_select").setup({
-        default_im_select = "1033",          -- 英文
-        default_command = "im-select.exe",   -- WSL 可直接调用 Windows exe
-      })
+      require("im_select").setup {
+        default_im_select = "1033", -- 英文
+        default_command = "im-select.exe", -- WSL 可直接调用 Windows exe
+      }
     end,
   },
-
-  -- 调试UI快捷键：确保文件树始终在最左侧
-  vim.keymap.set("n", "<leader>du", function()
-    local dapui = require("dapui")
-    dapui.toggle()
-  end, { desc = "debug ui toggle" })
 }

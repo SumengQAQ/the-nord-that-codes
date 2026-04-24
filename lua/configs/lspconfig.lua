@@ -23,6 +23,60 @@ vim.lsp.config('pyright', {
 local servers = { "html", "cssls", "pyright", "clangd", "tsserver", "eslint", "jsonls", "tailwindcss" }
 vim.lsp.enable(servers)
 
+-- 同步行宽 120
+for _, server in ipairs(servers) do
+  local ok, client = pcall(vim.lsp.get_active_clients, { name = server })
+  if ok and client and #client > 0 then
+    vim.api.nvim_buf_set_option(0, "textwidth", 120)
+  end
+end
+
+local line_length_settings = {
+  pyright = {
+    settings = {
+      pyright = {
+        disableOrganizeImports = false,
+      },
+      python = {
+        analysis = {
+          typeCheckingMode = "basic",
+        },
+      },
+    },
+  },
+  clangd = {
+    cmd = {
+      "clangd",
+      "--clang-tidy",
+      "--header-insertion=never",
+    },
+  },
+  tsserver = {
+    settings = {
+      typescript = {
+        format = {
+          options = {
+            printWidth = 120,
+            tabSize = 2,
+          },
+        },
+      },
+      javascript = {
+        format = {
+          options = {
+            printWidth = 120,
+            tabSize = 2,
+          },
+        },
+      },
+    },
+  },
+}
+
+for server, config in pairs(line_length_settings) do
+  pcall(vim.lsp.config, server, config)
+end
+
 -- venv-lsp 自动检测虚拟环境
 require("venv-lsp").setup({
   disable_auto_venv = false,
