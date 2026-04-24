@@ -2,11 +2,29 @@ return {
   -- 文件树
   {
     "nvim-tree/nvim-tree.lua",
+    event = "VeryLazy",
     opts = {
       filters = {
         dotfiles = true,
         git_ignored = true,
         custom = { "node_modules" },
+      },
+      view = {
+        float = {
+          enable = true,
+          open_win_config = function()
+            local screen_w = vim.o.columns
+            local screen_h = vim.o.lines
+            return {
+              relative = "editor",
+              width = math.floor(screen_w * 0.25),
+              height = math.floor(screen_h * 0.8),
+              row = math.floor(screen_h * 0.1),
+              col = 0,
+              border = "rounded",
+            }
+          end,
+        },
       },
     },
   },
@@ -50,7 +68,12 @@ return {
     keys = {
       { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
     },
-    opts = {},
+    opts = {
+      outline_window = {
+        width = 21,
+        position = "right",
+      },
+    },
   },
 
   -- 自动补全
@@ -118,10 +141,15 @@ return {
           type = "python",
           request = "launch",
           name = "调试当前文件",
-          program = "${file}",
+          program = function()
+            -- 调试前先保存文件，确保路径正确
+            vim.cmd("write")
+            return vim.fn.expand("%:p")
+          end,
           pythonPath = function()
             return vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
           end,
+          cwd = "${workspaceFolder}",
         },
       }
 
@@ -160,8 +188,55 @@ return {
 
   {
     "rcarriga/nvim-dap-ui",
+    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
     config = function()
-      require("dapui").setup()
+      local dapui = require("dapui")
+      dapui.setup({
+        layouts = {
+          {
+            elements = {
+              { id = "scopes",      size = 0.40 },
+              { id = "stacks",      size = 0.30 },
+              { id = "watches",     size = 0.15 },
+              { id = "breakpoints", size = 0.15 },
+            },
+            size = 0.22,
+            position = "left",
+          },
+          {
+            elements = {
+              { id = "repl", size = 1.0 },
+            },
+            size = 0.20,
+            position = "bottom",
+          },
+        },
+        controls = {
+          element = "repl",
+          enabled = true,
+          icons = {
+            pause = "",
+            play = "",
+            step_into = "",
+            step_over = "",
+            step_out = "",
+            step_back = "",
+            run_last = "↻",
+            terminate = "",
+          },
+        },
+        floating = {
+          max_height = 0.5,
+          max_width = 0.4,
+          border = "single",
+          mappings = {
+            close = { "q", "<Esc>" },
+          },
+          options = {
+            focusable = true,
+          },
+        },
+      })
     end,
   },
 
@@ -730,4 +805,26 @@ return {
       })
     end,
   },
+
+  -- 中英文输入法自动切换 (WSL + Windows 输入法)
+  {
+    "keaising/im-select.nvim",
+    event = { "InsertEnter", "InsertLeave" },
+    config = function()
+      -- WSL 中通过 im-select.exe 切换输入法
+      -- 需要先下载 im-select.exe 放到 Windows PATH 中
+      -- 下载地址: https://github.com/daipeihust/im-select/raw/master/win64/im-select.exe
+      -- 放在 C:\Windows\System32\im-select.exe
+      require("im_select").setup({
+        default_im_select = "1033",          -- 英文
+        default_command = "im-select.exe",   -- WSL 可直接调用 Windows exe
+      })
+    end,
+  },
+
+  -- 调试UI快捷键：确保文件树始终在最左侧
+  vim.keymap.set("n", "<leader>du", function()
+    local dapui = require("dapui")
+    dapui.toggle()
+  end, { desc = "debug ui toggle" })
 }

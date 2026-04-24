@@ -17,17 +17,17 @@ local options = {
   formatters = {
     ruff_format = {
       command = vim.fn.stdpath "data" .. "/mason/packages/ruff/venv/bin/ruff",
-      args = { "format", "--force-exclude", "--stdin-filename", "$FILENAME", "-" },
+      args = { "format", "--force-exclude", "--line-length", "120", "--stdin-filename", "$FILENAME", "-" },
       stdin = true,
     },
     ["clang-format"] = {
       command = vim.fn.stdpath "data" .. "/mason/packages/clang-format/venv/bin/clang-format",
-      args = { "--assume-filename", "$FILENAME" },
+      args = { "--assume-filename", "$FILENAME", "--style={BasedOnStyle: llvm, ColumnLimit: 120}" },
       stdin = true,
     },
     prettierd = {
       command = "prettierd",
-      args = { "$FILENAME" },
+      args = { "$FILENAME", "--print-width", "120" },
       stdin = true,
     },
   },
