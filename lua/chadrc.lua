@@ -7,6 +7,7 @@ local M = {}
 
 M.base46 = {
   theme = "nord",
+  transparency = true,
 }
 
 M.ui = {
@@ -26,6 +27,10 @@ M.term = {
     border = "rounded",
   },
 }
+
+vim.schedule(function()
+  vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+end)
 
 M.nvdash = {
   load_on_startup = true,

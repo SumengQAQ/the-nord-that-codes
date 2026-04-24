@@ -690,31 +690,40 @@ return {
   -- 彩虹括号
   {
     "HiPhish/rainbow-delimiters.nvim",
+    lazy = false,
     config = function()
-      local rainbow_delimiters = require('rainbow-delimiters')
+      local nord = {
+        red    = "#BF616A",
+        orange = "#D08770",
+        yellow = "#EBCB8B",
+        green  = "#A3BE8C",
+        cyan   = "#88C0D0",
+        blue   = "#81A1C1",
+        violet = "#B48EAD",
+      }
+      local hl_groups = {
+        RainbowDelimiterRed    = { fg = nord.cyan },
+        RainbowDelimiterYellow = { fg = nord.yellow },
+        RainbowDelimiterBlue   = { fg = nord.blue },
+        RainbowDelimiterOrange = { fg = nord.orange },
+        RainbowDelimiterGreen  = { fg = nord.green },
+        RainbowDelimiterViolet = { fg = nord.violet },
+      }
+      for name, opts in pairs(hl_groups) do
+        vim.api.nvim_set_hl(0, name, opts)
+      end
 
       vim.g.rainbow_delimiters = {
-        strategy = {
-          [''] = rainbow_delimiters.strategy['global'],
-          vim = rainbow_delimiters.strategy['local'],
-        },
-        query = {
-          [''] = 'rainbow-delimiters',
-          lua = 'rainbow-blocks',
-        },
-        priority = {
-          [''] = 110,
-          lua = 210,
-        },
+        strategy = { [""] = "rainbow-delimiters.strategy.global", vim = "rainbow-delimiters.strategy.local" },
+        query    = { [""] = "rainbow-delimiters", lua = "rainbow-blocks" },
+        priority = { [""] = 110,             lua = 210 },
         highlight = {
-          -- Nord主题颜色
-          'RainbowDelimiterRed',
-          'RainbowDelimiterYellow', 
-          'RainbowDelimiterBlue',
-          'RainbowDelimiterOrange',
-          'RainbowDelimiterGreen',
-          'RainbowDelimiterViolet',
-          'RainbowDelimiterCyan',
+          "RainbowDelimiterRed",
+          "RainbowDelimiterYellow",
+          "RainbowDelimiterBlue",
+          "RainbowDelimiterOrange",
+          "RainbowDelimiterGreen",
+          "RainbowDelimiterViolet",
         },
       }
     end,
