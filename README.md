@@ -1,156 +1,215 @@
-# 🐍 Sumeng's NvChad 配置
+<p align="center">
+  <img src="https://img.shields.io/badge/NvChad-v3-7c3aed?style=for-the-badge&logo=neovim&logoColor=white" alt="NvChad">
+  <img src="https://img.shields.io/badge/Theme-Nord-88C0D0?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM4OEMwRDAiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTEyIDJMMiA3bDEwIDUgMTAtNS0xMC01eiIvPjxwYXRoIGQ9Ik0yIDE3bDEwIDUgMTAtNSIvPjxwYXRoIGQ9Ik0yIDEybDEwIDUgMTAtNSIvPjwvc3ZnPg==" alt="Nord">
+  <img src="https://img.shields.io/badge/WSL-Ready-4FAA5E?style=for-the-badge&logo=linux&logoColor=white" alt="WSL">
+</p>
 
-[![Neovim](https://img.shields.io/badge/Neovim-0.10+-green?logo=neovim&logoColor=white)](https://neovim.io/)
-[![NvChad](https://img.shields.io/badge/NvChad-v2.5-blue)](https://nvchad.com/)
-[![Python](https://img.shields.io/badge/Python-3.12+-blue?logo=python&logoColor=white)](https://www.python.org/)
-[![Codeium](https://img.shields.io/badge/AI-Codeium-purple)](https://codeium.com/)
-[![Made with ❤️](https://img.shields.io/badge/Made_with-❤️-ff69b4)](https://github.com/SumengQAQ)
+<h1 align="center">❄  Nord.nvim</h1>
 
-## 📖 关于本配置
+<p align="center">
+  <b>vibe coding 的最佳拍档 · 我的 Neovim 配置 · 你的下一把瑞士军刀</b>
+</p>
 
-这是我 —— 一个**新媒体技术专业**（对，不是计算机系）的水课战神，从 LazyVim 难民一路折腾出来的 NvChad 配置。
+<br>
 
-**核心哲学：** 开箱即用，但不臃肿。只保留我真正用得到的东西。
+<p align="center">
+  <code>基于 NvChad，专注 Nord 主题 ，专为 WSL + Windows 开发者打造</code>
+</p>
 
-**花絮：** 为了修好 Codeium 补全，我花了 **5 块钱** API 费和 AI 斗智斗勇。特此纪念。
+<br>
 
-## ✨ 特性
+## 🌊 我们的故事
 
-- 🎯 **针对 Python/C 优化**：LSP、格式化、调试开箱即用
-- 🤖 **Codeium AI 补全**：免费的 GitHub Copilot 替代品
-- 🎨 **Nord 主题**：护眼冷色调，配合 Oh My Posh 使用
-- ⌨️ **纯键盘流**：Telescope 模糊查找 + LazyGit 可视化
-- 🐞 **断点调试**：nvim-dap + debugpy，和 PyCharm 说再见
-- 📁 **文件树**：nvim-tree，支持 Git 状态显示
+这不是一份严谨的生产级配置，而是一个大学生用 **vibe coding** 折腾出来的成果，用心打磨的每一个细节：从自动切换中英文输入法的手感，到光标拖影划过屏幕的那一抹丝滑，再到彩虹括号在 Nord 蓝调中层层绽放。
 
-## 🚀 快速开始
+如果你也喜欢在终端里折腾、在代码中找感觉，或许你能在这里找到共鸣。
 
-### 1. 备份你的旧配置
+> _"Not the best config, but the vibiest one."_
+
+<br>
+
+## ✨ 灵魂亮点
+
+|                           |                                               |
+| ------------------------- | --------------------------------------------- |
+| 🎨 **Nord 美学**          | 冷静的北极蓝，从头到脚统一配色                |
+| 🪟 **Windows 肌肉记忆**   | Ctrl+C/V/X/Z/S/A 无缝衔接（WSL 亲儿子）       |
+| 🤖 **双 AI 加持**         | AI 聊天 + Codeium 自动补全，双厨狂喜          |
+| 🌀 **丝滑动画**           | 光标拖影、平滑滚动、窗口动画…… 能动的绝不静态 |
+| 🌈 **彩虹括号**           | Nord 专属配色，层层嵌套一眼清                 |
+| 🔤 **零切换烦恼**         | Insert 自动切英文，回到 Normal 恢复中文输入法 |
+| 🎯 **调试一站式**         | DAP + UI + Python，F5 体验不再是 IDE 的专利   |
+| 🗄️ **数据库就在编辑器里** | vim-dadbod，查表改数据不用切窗口              |
+
+<br>
+
+## 📦 已集成的能力
+
+### 🤖 AI
+
+| 插件              | 作用                               |
+| ----------------- | ---------------------------------- |
+| **CodeCompanion** | AI 聊天 / 行内提示 / Actions       |
+| **Codeium**       | 智能自动补全                       |
+
+### 🐛 调试 (DAP)
+
+| 插件                | 作用                |
+| ------------------- | ------------------- |
+| **nvim-dap**        | 调试适配器核心      |
+| **nvim-dap-ui**     | 可视化调试面板      |
+| **nvim-dap-python** | Python 调试开箱即用 |
+
+支持 **Python** 和 **C/C++ (codelldb)** 调试。
+
+### 🔧 工程工具
+
+| 类别        | 技术栈                                                              |
+| ----------- | ------------------------------------------------------------------- |
+| **Git**     | lazygit + diffview + undotree + telescope git                       |
+| **Test**    | neotest (Python pytest + Jest)                                      |
+| **LSP**     | pyright, clangd, tsserver, eslint, tailwindcss, jsonls, html, cssls |
+| **Format**  | ruff (120行宽) + clang-format (120行宽) + prettierd (120行宽)       |
+| **DB**      | vim-dadbod + dadbod-ui                                              |
+| **Outline** | outline.nvim                                                        |
+
+### 🎨 视觉美化
+
+| 插件                   | 效果                 |
+| ---------------------- | -------------------- |
+| **smear-cursor.nvim**  | 光标拖影，如墨迹流淌 |
+| **SmoothCursor.nvim**  | 箭头光标 + 粒子拖尾  |
+| **neoscroll.nvim**     | 平滑滚动，告别硬跳   |
+| **mini.animate**       | 窗口开合、滚动动画   |
+| **windows.nvim**       | 窗口分割弹性动画     |
+| **rainbow-delimiters** | Nord 六色括号彩虹    |
+| **indent-blankline**   | 缩进指引线           |
+| **mini.indentscope**   | 缩进范围动态高亮     |
+| **nvim-notify**        | 弹出式通知替代       |
+| **flare.nvim**         | 光标跳转高亮追踪     |
+| **vim-illuminate**     | 同名单词自动高亮     |
+| **colorful-winsep**    | 多彩窗口分隔线       |
+
+### 📝 编辑体验
+
+| 插件                     | 作用                     |
+| ------------------------ | ------------------------ |
+| **Comment.nvim**         | 智能注释切换             |
+| **nvim-autopairs**       | 自动补全括号             |
+| **nvim-ts-autotag**      | JSX/HTML 自动补全标签    |
+| **nvim-cursorword**      | 光标下单词下划线高亮     |
+| **todo-comments.nvim**   | TODO/FIX/HACK 高亮与管理 |
+| **fusen.nvim**           | 便签工具，随手记         |
+| **render-markdown.nvim** | Markdown 实时渲染        |
+
+### 🧩 实用增强
+
+| 插件                     | 作用                       |
+| ------------------------ | -------------------------- |
+| **telescope-frecency**   | 按频率排序文件搜索         |
+| **im-select.nvim**       | 中英文输入法自动切换 (WSL) |
+| **nvim-lint (eslint_d)** | JS/TS 实时 lint            |
+| **venv-lsp.nvim**        | 自动检测 Python 虚拟环境   |
+
+<br>
+
+## 🚀 快速上手
+
+### 前置要求
+
+- Neovim >= 0.10
+- [NvChad](https://github.com/NvChad/NvChad)
+- （WSL）`im-select.exe` 放在 `C:\Windows\System32\`
+- （WSL）安装 `lazygit`、`prettierd`
+
+### 安装
 
 ```bash
-mv ~/.config/nvim ~/.config/nvim.bak
+git clone https://github.com/sumeng/nvim-config ~/.config/nvim
+nvim --headless "+Lazy! sync" +qa
 ```
 
-### 2. 克隆本仓库
+<br>
 
-```bash
-git clone https://github.com/SumengQAQ/sumeng-nvim.git ~/.config/nvim
-```
+## ⌨️ 快捷键速查
 
-### 3. 启动 Neovim
+### 🤖 AI
 
-```bash
-nvim
-```
+| 按键         | 功能             |
+| ------------ | ---------------- |
+| `<leader>aa` | AI Actions 菜单  |
+| `<leader>ac` | AI 对话面板      |
+| `<leader>ai` | 选中代码行内提示 |
 
-首次启动会自动安装所有插件，等它跑完（约 2-3 分钟）。
+### 🐛 调试
 
-### 4. 安装 LSP 服务器
+| 按键         | 功能         |
+| ------------ | ------------ |
+| `<leader>du` | 开关调试面板 |
+| `<leader>dc` | 继续运行     |
+| `<leader>do` | 单步跳过     |
+| `<leader>di` | 单步进入     |
+| `<leader>dj` | 单步跳出     |
+| `<leader>dt` | 切换断点     |
+| `<leader>dl` | 列出断点     |
 
-进入 Neovim 后执行：
+### 🗂️ Git
 
-```vim
-:Mason
-```
+| 按键         | 功能         |
+| ------------ | ------------ |
+| `<leader>gg` | Lazygit      |
+| `<leader>gd` | Diffview     |
+| `<leader>gs` | Git Status   |
+| `<leader>gc` | Git Commits  |
+| `<leader>gb` | Git Branches |
+| `<leader>gl` | Git Log      |
 
-安装以下 LSP：
+### ✏️ 编辑 (Windows 风格)
 
-- `pyright`（Python）
-- `clangd`（C/C++）
-- `lua-language-server`（Lua）
+| 按键         | 功能              |
+| ------------ | ----------------- |
+| `<C-s>`      | 保存              |
+| `<C-z>`      | 撤销              |
+| `<C-y>`      | 重做              |
+| `<C-c>`      | 复制 (系统剪贴板) |
+| `<C-x>`      | 剪切 (系统剪贴板) |
+| `<C-v>`      | 粘贴 (系统剪贴板) |
+| `<C-a>`      | 全选              |
+| `<C-d>`      | 删除整行          |
+| `<leader>er` | 重命名符号        |
 
-### 5. 配置 Codeium（可选）
+### 🧪 测试
 
-去 [codeium.com](https://codeium.com) 注册，拿到 API Key，在终端执行：
+| 按键         | 功能             |
+| ------------ | ---------------- |
+| `<leader>tr` | 运行光标处测试   |
+| `<leader>tf` | 运行当前文件测试 |
+| `<leader>ts` | 开关测试面板     |
 
-```bash
-mkdir -p ~/.config/codeium
-echo '{"api_key": "你的API Key"}' > ~/.config/codeium/config.json
-```
+### ⚡ 常用
 
-## ⌨️ 核心快捷键
+| 按键         | 功能                   |
+| ------------ | ---------------------- |
+| `<leader>o`  | 代码大纲               |
+| `<leader>u`  | Undo 时间线            |
+| `<leader>r`  | 运行脚本 (Python/C/JS) |
+| `<leader>na` | 添加便签               |
+| `<leader>ct` | 查找 TODO 注释         |
 
-### 文件与搜索
+<br>
 
-| 操作        | 快捷键       | 说明               |
-| ----------- | ------------ | ------------------ |
-| 找文件      | `<leader>ff` | Telescope 模糊查找 |
-| 全局搜代码  | `<leader>sg` | live grep          |
-| 文件树      | `<leader>e`  | 开关 nvim-tree     |
-| 切换 Buffer | `<leader>fb` | 找已打开的文件     |
+## 📸 截图
 
-### 代码与补全
+> _（画个饼，等我折腾完 alpha-nvim 启动页就补上）_
 
-| 操作             | 快捷键       | 说明             |
-| ---------------- | ------------ | ---------------- |
-| 格式化代码       | `<leader>lf` | LSP 格式化       |
-| 跳转定义         | `gd`         | go to definition |
-| 重命名           | `<leader>cr` | LSP rename       |
-| Codeium 接受补全 | `Tab`        | 灰色补全         |
-| 手动触发 Codeium | `Ctrl+;`     | 没自动弹出时用   |
+<br>
 
-### Git（LazyGit）
+## 📜 LICENSE
 
-| 操作          | 快捷键       | 说明              |
-| ------------- | ------------ | ----------------- |
-| 打开 LazyGit  | `<leader>gg` | 全功能 Git TUI    |
-| 行内 Git 状态 | 自动显示     | 左侧绿色/红色竖条 |
-
-### 调试（DAP）
-
-| 操作     | 快捷键       | 说明        |
-| -------- | ------------ | ----------- |
-| 设置断点 | `<leader>db` | 光标所在行  |
-| 启动调试 | `<leader>dc` | 选择 Python |
-| 单步跳过 | `<leader>do` | step over   |
-| 单步进入 | `<leader>di` | step into   |
-| 查看变量 | `<leader>du` | DAP UI      |
-
-## 📁 目录结构
-
-```
-~/.config/nvim/
-├── init.lua                 # 入口
-├── lazy-lock.json           # 插件版本锁定
-├── lua/
-│   ├── custom/
-│   │   ├── plugins.lua      # 插件配置
-│   │   ├── mappings.lua     # 快捷键
-│   │   └── options.lua      # 编辑器选项
-│   └── plugins/             # 单文件插件配置
-│       ├── blink-cmp.lua    # 补全引擎
-│       ├── lsp.lua          # LSP 配置
-│       └── dap.lua          # 调试配置
-└── README.md                # 本文件
-```
-
-## 🔧 依赖
-
-确保你的系统装了以下工具：
-
-- **Neovim** ≥ 0.10.0
-- **Git**
-- **ripgrep** (`sudo apt install ripgrep`)
-- **fd** (`sudo apt install fd-find`)
-- **Nerd Font**（推荐 JetBrains Mono Nerd Font）
-
-## 🙋‍♂️ 关于作者
-
-- **塑梦** / sumeng
-- 新媒体技术专业（对，不是计算机系）
-- 用 Neovim + LazyGit + Tailscale 写代码的水课战神
-- 邮箱：sumengovocn@gmail.com
-
-## ⭐ Star 历史
-
-如果你觉得这个配置对你有帮助，点个 Star 让我知道有人在看！
-
-[![Star History Chart](https://api.star-history.com/svg?repos=SumengQAQ/sumeng-nvim&type=Date)](https://star-history.com/#SumengQAQ/sumeng-nvim&Date)
-
-## 📜 许可证
-
-MIT License - 随便用，别告我。
+MIT © SumengQAQ
 
 ---
 
-**Made with ❤️, NvChad, and 5 块钱的 API 费.**
+<p align="center">
+  <sub>Built with ❤️ and vibe coding · 在终端里找到属于你的 flow</sub>
+</p>
