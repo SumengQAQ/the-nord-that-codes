@@ -101,6 +101,7 @@
 | **todo-comments.nvim**   | TODO/FIX/HACK 高亮与管理 |
 | **fusen.nvim**           | 便签工具，随手记         |
 | **render-markdown.nvim** | Markdown 实时渲染        |
+| **mermaid-cli**          | Mermaid 图片渲染         |
 
 ### 🧩 实用增强
 
@@ -195,13 +196,14 @@ nvim --headless "+Lazy! sync" +qa
 | `<leader>r`  | 运行脚本 (Python/C/JS) |
 | `<leader>na` | 添加便签               |
 | `<leader>ct` | 查找 TODO 注释         |
+| `<leader>m`  | 生成.png 图片          |
 
 <br>
 
 ## 📸 截图
-
-> _（画个饼，等我折腾完 alpha-nvim 启动页就补上）_
-
+![](https://private-user-images.githubusercontent.com/171399158/583709012-9d873d55-13c0-422f-8330-f634b1e08002.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzcwOTA1MTcsIm5iZiI6MTc3NzA5MDIxNywicGF0aCI6Ii8xNzEzOTkxNTgvNTgzNzA5MDEyLTlkODczZDU1LTEzYzAtNDIyZi04MzMwLWY2MzRiMWUwODAwMi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwNDI1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDQyNVQwNDEwMTdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1mYmFjMDg1YzcwYjgyMDU5MDdlZjgwOTNjZDZmZjc2Yzg5MGMwYzMxMTc4MzFmZTVlZTE4N2YxZDdiMDAxZjU2JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZyZXNwb25zZS1jb250ZW50LXR5cGU9aW1hZ2UlMkZwbmcifQ.s1qv4VZQjbabv9J40BwQoKNc81b71qRuRzOHS5zI3wo)
+![](https://private-user-images.githubusercontent.com/171399158/583709014-bbb44cb2-e63e-47a2-934a-105a64f56fbc.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzcwOTA1MTcsIm5iZiI6MTc3NzA5MDIxNywicGF0aCI6Ii8xNzEzOTkxNTgvNTgzNzA5MDE0LWJiYjQ0Y2IyLWU2M2UtNDdhMi05MzRhLTEwNWE2NGY1NmZiYy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwNDI1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDQyNVQwNDEwMTdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0yZWI0MDZkN2VkNWJhNjczNmVjMTYzMGZlZGYyM2M5YjcwOTdlYjlmMDk4N2Q1ZGExMGUzODQ0MGMxZDk2MjU0JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZyZXNwb25zZS1jb250ZW50LXR5cGU9aW1hZ2UlMkZwbmcifQ.5P-6j7oqcc4rmA3oSXUqAbOjkNnn9CYjh_1L4tdC8D4)
+![](https://private-user-images.githubusercontent.com/171399158/583709013-9131c6a8-99de-4cec-ad3b-77a04f6ca7c4.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzcwOTA1MTcsIm5iZiI6MTc3NzA5MDIxNywicGF0aCI6Ii8xNzEzOTkxNTgvNTgzNzA5MDEzLTkxMzFjNmE4LTk5ZGUtNGNlYy1hZDNiLTc3YTA0ZjZjYTdjNC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjYwNDI1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI2MDQyNVQwNDEwMTdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1hNDgxZGY2MzRjMTdiMGVmMWE1NjY0YjFiZWYxOTVjMTdkOWFjMWQ2MjMwMGY0OThiYTc3Zjc1MmE2Y2E2ZmUxJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZyZXNwb25zZS1jb250ZW50LXR5cGU9aW1hZ2UlMkZwbmcifQ.dljjCGg6sxkfJ50-UH-C0Nv4QkJofjFej2idyNIeEGI)
 <br>
 
 ## 📜 LICENSE
