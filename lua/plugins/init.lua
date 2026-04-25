@@ -27,6 +27,9 @@ return {
         },
       },
     },
+    config = function(_, opts)
+      require("nvim-tree").setup(opts)
+    end,
   },
 
   -- Markdown渲染
@@ -772,7 +775,7 @@ return {
           HACK = { icon = " ", color = "warning" },
           WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
           PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-          NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+          NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
           TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
         },
         highlight = {
@@ -825,6 +828,9 @@ return {
           winbar = true,
         },
         config = {
+          project = {
+            action = 'require("telescope.builtin").find_files({cwd=...})',
+          },
           header = {
             "  ██████   █████                        █████ ",
             " ░░██████ ░░███                        ░░███  ",
@@ -842,7 +848,7 @@ return {
           },
           shortcut = {
             { desc = "󰊳 Update", group = "@property", action = "Lazy update", key = "u" },
-            { desc = " Files", group = "Label", action = "Telescope find_files", key = "f" },
+            { desc = " Files", group = "Label", action = function() require("telescope.builtin").find_files() end, key = "f" },
             { desc = " Recent", group = "Number", action = "Telescope oldfiles", key = "r" },
             { desc = "󰈭 Word", group = "String", action = "Telescope live_grep", key = "w" },
             { desc = " Config", group = "DiagnosticHint", action = "e $MYVIMRC", key = "c" },

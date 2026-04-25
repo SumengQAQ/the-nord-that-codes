@@ -114,6 +114,15 @@ map("n", "<leader>nC", fusen.clear_buffer, { desc = "clear buffer notes" })
 map("n", "<leader>nn", fusen.next_mark, { desc = "next note" })
 map("n", "<leader>np", fusen.prev_mark, { desc = "prev note" })
 map("n", "<leader>nl", fusen.list_marks, { desc = "list notes" })
+-- Mermaid 渲染（mmdc CLI 生成 PNG）
+map("n", "<leader>m", function()
+  local file = vim.fn.expand("%")
+  local out = vim.fn.expand("%:r") .. ".png"
+  vim.cmd("w")
+  vim.fn.system({ "mmdc", "-i", file, "-o", out })
+  vim.notify("Mermaid rendered: " .. out, vim.log.levels.INFO)
+end, { desc = "mermaid render to png" })
+
 -- 颜色高亮
 map("n", "<leader>uc", "<cmd>ColorizerToggle<CR>", { desc = "toggle colorizer" })
 
@@ -156,6 +165,7 @@ require("which-key").add({
   { "<leader>g", group = "git" },
   { "<leader>n", group = "note", icon = { icon = "󰈐 ", color = "yellow" } },
   { "<leader>r", group = "run", icon = { icon = "▶ ", color = "green" } },
+  { "<leader>m", group = "mermaid", icon = { icon = " ", color = "cyan" } },
   { "<leader>t", group = "test", icon = { icon = " ", color = "green" } },
 })
 
