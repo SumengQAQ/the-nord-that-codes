@@ -1,4 +1,20 @@
 return {
+  -- Docstring 注释生成（@param / @return / @type）
+  {
+    "danymat/neogen",
+    name = "neogen.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("neogen").setup {
+        snippet_engine = "luasnip",
+        languages = {
+          python = {
+            annotation_convention = "google",
+          },
+        },
+      }
+    end,
+  },
   -- 文件树
   {
     "nvim-tree/nvim-tree.lua",

@@ -90,6 +90,26 @@ map("n", "<leader>r", function()
   end
 end, {     desc = "run program" })
 map("n", "<leader>er", "<cmd>lua vim.lsp.buf.rename()<CR>", { desc = "rename" })
+map("n", "<leader>ef", "<cmd>lua vim.lsp.buf.format()<CR>", { desc = "format file" })
+map("n", "<leader>ea", "<cmd>lua vim.lsp.buf.code_action()<CR>", { desc = "code action" })
+map("n", "<leader>ej", "<cmd>lua vim.diagnostic.goto_next()<CR>", { desc = "next diagnostic" })
+map("n", "<leader>ek", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { desc = "prev diagnostic" })
+map("n", "<leader>eg", function()
+  require("neogen").generate()
+end, { desc = "generate docstring" })
+map("n", "<leader>ec", function()
+  local diag = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
+  if #diag > 0 then
+    local msgs = {}
+    for _, d in ipairs(diag) do
+      table.insert(msgs, string.format("[%s] %s: %s", d.source or "?", d.code or "?", d.message))
+    end
+    vim.fn.setreg("+", table.concat(msgs, "\n"))
+    vim.notify("Copied " .. #diag .. " diagnostic(s) to clipboard", vim.log.levels.INFO)
+  else
+    vim.notify("No diagnostics on this line", vim.log.levels.WARN)
+  end
+end, { desc = "copy diagnostics" })
 
 -- 测试工具
 map("n", "<leader>tr", function()
