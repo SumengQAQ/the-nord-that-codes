@@ -17,7 +17,16 @@ end
 
 -- 配置 pyright 根目录标记（支持更多项目类型）
 vim.lsp.config('pyright', {
-  root_markers = { '.git', 'pyproject.toml', 'setup.py', 'requirements.txt', 'config.toml', '.venv' }
+  root_markers = { '.git', 'pyproject.toml', 'setup.py', 'requirements.txt', 'config.toml', '.venv' },
+  settings = {
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+        diagnosticMode = "workspace",
+      },
+    },
+  },
 })
 
 local servers = { "html", "cssls", "pyright", "clangd", "tsserver", "eslint", "jsonls", "tailwindcss" }

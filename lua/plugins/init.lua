@@ -118,13 +118,7 @@ return {
   },
 
   -- Python虚拟环境检测
-  {
-    "jglasovic/venv-lsp.nvim",
-    opts = {
-      disable_auto_venv = false,
-    },
-  },
-
+  -- nvim-nio（neotest 依赖，已移至调试区附近）
   -- 异步库
   {
     "nvim-neotest/nvim-nio",
