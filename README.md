@@ -130,6 +130,7 @@
 - Neovim >= 0.11
 - [NvChad](https://github.com/NvChad/NvChad)
 - （WSL）`im-select.exe` 放在 `C:\Windows\System32\`
+- （WSL）`win32yank.exe` 放在 `~/.local/bin/`（用于系统剪贴板中文支持）
 - （WSL）安装 `lazygit`、`prettierd`
 
 ### 安装
