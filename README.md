@@ -30,16 +30,20 @@
 
 ## ✨ 灵魂亮点
 
-|                           |                                                 |
-| ------------------------- | ----------------------------------------------- |
-| 🎨 **Nord 美学**          | 冷静的北极蓝，从头到脚统一配色                  |
-| 🪟 **Windows 肌肉记忆**   | Ctrl+C/V/X/Z/S/A 无缝衔接（WSL 亲儿子）         |
-| 🤖 **AI 加持**            | DeepSeek 聊天 + Codeium 自动补全                |
-| 🌀 **丝滑动画**           | 光标拖影、平滑滚动、窗口动画…… 能动的绝不静态   |
-| 🌈 **彩虹括号**           | Nord 专属配色，层层嵌套一眼清                   |
-| 🔤 **零切换烦恼**         | Insert 自动切英文，回到 Normal 恢复中文输入法   |
-| 🎯 **调试一站式**         | DAP + UI + Python/C++，F5 体验不再是 IDE 的专利 |
-| 🗄️ **数据库就在编辑器里** | vim-dadbod，查表改数据不用切窗口                |
+|                           |                                                      |
+| ------------------------- | ---------------------------------------------------- |
+| 🎨 **Nord 美学**          | 冷静的北极蓝，从头到脚统一配色                       |
+| 🪟 **Windows 肌肉记忆**   | Ctrl+C/V/X/Z/S/A 无缝衔接（WSL 亲儿子）              |
+| 🤖 **双 AI 加持**         | CodeCompanion 对话 + 行内补全                        |
+| 🌀 **丝滑动画**           | 光标拖影、平滑滚动、窗口动画…… 能动的绝不静态        |
+| 🌈 **彩虹括号**           | Nord 专属配色，层层嵌套一眼清                        |
+| 🔤 **零切换烦恼**         | Insert 自动切英文，回到 Normal 恢复中文输入法        |
+| 🎯 **调试一站式**         | DAP + UI + Python/C++，F5 体验不再是 IDE 的专利      |
+| 🗄️ **数据库就在编辑器里** | vim-dadbod，查表改数据不用切窗口                     |
+| 🌐 **HTTP 调试**          | 在 nvim 里直接发送 API 请求，不用切出 Thunder Client |
+| 📊 **面包屑导航**         | 顶部 winbar 显示代码结构，类>方法一目了然            |
+| 📜 **滚动条标记**         | 右侧滚动条标记错误/警告位置                          |
+| 🚀 **命令行美化**         | noice.nvim 让弹窗和消息更精致                        |
 
 <br>
 
@@ -50,7 +54,6 @@
 | 插件              | 作用                                     |
 | ----------------- | ---------------------------------------- |
 | **CodeCompanion** | AI 聊天 / 行内提示 / Actions（DeepSeek） |
-| **Codeium**       | 智能自动补全                             |
 
 ### 🐛 调试 (DAP)
 
@@ -64,16 +67,17 @@
 
 ### 🔧 工程工具
 
-| 类别          | 技术栈                                                              |
-| ------------- | ------------------------------------------------------------------- |
-| **Git**       | lazygit + diffview + undotree + telescope git                       |
-| **Test**      | neotest (Python pytest + Jest)                                      |
-| **LSP**       | pyright, clangd, tsserver, eslint, tailwindcss, jsonls, html, cssls |
-| **Format**    | ruff (120行宽) + clang-format (120行宽) + prettierd (120行宽)       |
-| **DB**        | vim-dadbod + dadbod-ui                                              |
-| **Outline**   | outline.nvim                                                        |
-| **Docstring** | neogen（Google 风格，一键生成 `@param` / `@return`）                |
-| **Mermaid**   | mmdc CLI 渲染图表 → PNG                                             |
+| 类别            | 技术栈                                                              |
+| --------------- | ------------------------------------------------------------------- |
+| **Git**         | lazygit + diffview + undotree + telescope git                       |
+| **Test**        | neotest (Python pytest + Jest)                                      |
+| **LSP**         | pyright, clangd, tsserver, eslint, tailwindcss, jsonls, html, cssls |
+| **Format**      | ruff (120行宽) + clang-format (120行宽) + prettierd (120行宽)       |
+| **DB**          | vim-dadbod + dadbod-ui                                              |
+| **Outline**     | outline.nvim                                                        |
+| **Docstring**   | neogen（Google 风格，一键生成 `@param` / `@return`）                |
+| **HTTP Client** | kulala.nvim（请求/响应浮动窗口）                                    |
+| **TODO 管理**   | todo-comments.nvim（高亮 + 搜索 TODO/FIX/HACK）                     |
 
 ### 🎨 视觉美化
 
@@ -88,9 +92,12 @@
 | **indent-blankline**   | 缩进指引线           |
 | **mini.indentscope**   | 缩进范围动态高亮     |
 | **nvim-notify**        | 弹出式通知替代       |
+| **noice.nvim**         | 命令行消息美化       |
 | **flare.nvim**         | 光标跳转高亮追踪     |
 | **vim-illuminate**     | 同名单词自动高亮     |
 | **colorful-winsep**    | 多彩窗口分隔线       |
+| **nvim-scrollbar**     | 右侧彩色滚动条       |
+| **nvim-navic**         | 顶部面包屑导航       |
 
 ### 📝 编辑体验
 
@@ -103,7 +110,6 @@
 | **todo-comments.nvim**   | TODO/FIX/HACK 高亮与管理 |
 | **fusen.nvim**           | 便签工具，随手记         |
 | **render-markdown.nvim** | Markdown 实时渲染        |
-| **mermaid-cli**          | Mermaid 图表渲染为 PNG   |
 
 ### 🧩 实用增强
 
@@ -124,7 +130,6 @@
 - [NvChad](https://github.com/NvChad/NvChad)
 - （WSL）`im-select.exe` 放在 `C:\Windows\System32\`
 - （WSL）安装 `lazygit`、`prettierd`
-- （可选）`npm install -g @mermaid-js/mermaid-cli`
 
 ### 安装
 
@@ -193,6 +198,16 @@ nvim --headless "+Lazy! sync" +qa
 | `<leader>ej` | 下一个诊断           |
 | `<leader>ek` | 上一个诊断           |
 
+### 🌐 HTTP 调试
+
+| 按键         | 功能                  |
+| ------------ | --------------------- |
+| `<leader>R`  | Send HTTP request     |
+| `<leader>RA` | Send all requests     |
+| `<leader>RC` | Close response window |
+
+> 适用于 `.http` / `.rest` 文件。
+
 ### 🧪 测试
 
 | 按键         | 功能             |
@@ -210,7 +225,6 @@ nvim --headless "+Lazy! sync" +qa
 | `<leader>r`  | 运行脚本 (Python/C/JS) |
 | `<leader>na` | 添加便签               |
 | `<leader>ct` | 查找 TODO 注释         |
-| `<leader>m`  | Mermaid 渲染为 PNG     |
 
 <br>
 

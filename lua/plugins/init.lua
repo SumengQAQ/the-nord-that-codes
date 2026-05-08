@@ -160,7 +160,14 @@ return {
           type = "python",
           request = "launch",
           name = "调试当前文件",
-          program = "${file}",
+          program = function()
+            local buf = vim.api.nvim_get_current_buf()
+            local path = vim.api.nvim_buf_get_name(buf)
+            if path == "" or vim.startswith(path, "[" ) then
+              path = vim.fn.expand "%:p"
+            end
+            return path
+          end,
           pythonPath = function()
             return vim.fn.stdpath "data" .. "/mason/packages/debugpy/venv/bin/python"
           end,
@@ -779,42 +786,43 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     config = function()
       require("todo-comments").setup {
-        signs = true, -- 在行号列显示图标
+        signs = true,
         sign_priority = 8,
+        diagnostics = {
+          enable = true,
+          severity = vim.diagnostic.severity.INFO,
+        },
         keywords = {
-          FIX = {
-            icon = " ", -- 图标
-            color = "error", -- 颜色
-            alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- 替代词
-          },
+          FIX = { icon = " ", color = "error", alt = { "FIXME", "BUG", "FIXIT", "ISSUE" } },
           TODO = { icon = " ", color = "info" },
           HACK = { icon = " ", color = "warning" },
           WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-          PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+          PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
           NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-          TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+          TEST = { icon = " ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
         },
         highlight = {
-          multiline = true, -- 多行注释
-          multiline_pattern = "^.", -- 模式
-          multiline_context = 10, -- 上下文行数
-          before = "", -- 高亮前字符
-          keyword = "wide", -- "fg", "bg", "wide", "wide_bg"
-          after = "fg", -- "fg", "bg", "wide"
-          pattern = [[.*<(KEYWORDS)\s*:]], -- 匹配模式
-          comments_only = true, -- 只高亮注释中的TODO
-          max_line_len = 400, -- 最大行长度
-          exclude = {}, -- 排除的文件类型
+          multiline = true,
+          multiline_pattern = "^.",
+          multiline_context = 10,
+          before = "",
+          keyword = "wide",
+          after = "fg",
+          pattern = [[.*<(KEYWORDS)\s*:]],
+          comments_only = true,
+          max_line_len = 400,
+          exclude = {},
         },
         colors = {
-          error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
-          warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
-          info = { "DiagnosticInfo", "#2563EB" },
-          hint = { "DiagnosticHint", "#10B981" },
-          default = { "Identifier", "#7C3AED" },
+          error = { "DiagnosticError", "ErrorMsg", "#BF616A" },
+          warning = { "DiagnosticWarn", "WarningMsg", "#D08770" },
+          info = { "DiagnosticInfo", "#88C0D0" },
+          hint = { "DiagnosticHint", "#A3BE8C" },
+          default = { "Identifier", "#81A1C1" },
+          test = { "Identifier", "#B48EAD" },
         },
         search = {
-          command = "rg", -- 使用的搜索命令
+          command = "rg",
           args = {
             "--color=never",
             "--no-heading",
@@ -822,7 +830,7 @@ return {
             "--line-number",
             "--column",
           },
-          pattern = [[\b(KEYWORDS):]], -- 搜索模式
+          pattern = [[\b(KEYWORDS):]],
         },
       }
     end,
@@ -912,6 +920,89 @@ return {
     end,
     dependencies = { { "nvim-tree/nvim-web-devicons" } },
   },
+
+  -- noice.nvim — 命令行消息美化
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    },
+    config = function()
+      require("noice").setup {
+        lsp = {
+          override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+          },
+        },
+        presets = {
+          bottom_search = true,
+          command_palette = true,
+          long_message_to_split = true,
+          inc_rename = false,
+          lsp_doc_border = false,
+        },
+      }
+    end,
+  },
+
+  -- nvim-navic — 面包屑导航
+  {
+    "SmiteshP/nvim-navic",
+    lazy = false,
+    config = function()
+      require("nvim-navic").setup {
+        highlight = true,
+        separator = " > ",
+        lsp = {
+          auto_attach = true,
+        },
+      }
+    end,
+  },
+
+  -- nvim-scrollbar — 右侧滚动条
+  {
+    "petertriho/nvim-scrollbar",
+    event = "VeryLazy",
+    config = function()
+      local scrollbar = require("scrollbar")
+      scrollbar.setup {
+        handle = {
+          color = "#4C566A",
+        },
+        marks = {
+          Search = { color = "#EBCB8B" },
+          Error = { color = "#BF616A" },
+          Warn = { color = "#D08770" },
+          Info = { color = "#88C0D0" },
+          Hint = { color = "#A3BE8C" },
+          Misc = { color = "#B48EAD" },
+        },
+      }
+    end,
+  },
+
+  -- kulala.nvim — 在 nvim 里直接调试 HTTP API
+  {
+    "mistweaverco/kulala.nvim",
+    ft = "http",
+    keys = {
+      { "<leader>R", "<cmd>lua require('kulala').run()<CR>", desc = "Send HTTP request", ft = "http" },
+      { "<leader>RA", "<cmd>lua require('kulala').run_all()<CR>", desc = "Send all requests", ft = "http" },
+      { "<leader>RC", "<cmd>lua require('kulala').close()<CR>", desc = "Close response window", ft = "http" },
+    },
+    config = function()
+      require("kulala").setup {
+        display_mode = "float",
+      }
+    end,
+  },
+
+
 
   -- ========== 中英文输入法自动切换 (WSL + Windows 输入法) ==========
   {
