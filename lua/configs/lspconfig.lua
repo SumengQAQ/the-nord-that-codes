@@ -15,11 +15,24 @@ LspConfig.on_attach = function(client, bufnr)
   vim.keymap.set("n", "<leader>er", vim.lsp.buf.rename, { buffer = bufnr, desc = "LSP rename" })
 end
 
--- 配置 pyright 根目录标记（支持更多项目类型）
+-- 配置 pyright（自动检测 .venv）
+local function find_venv_python()
+  local venv_paths = { ".venv", "venv", ".env", "env" }
+  local root = vim.fn.getcwd()
+  for _, venv in ipairs(venv_paths) do
+    local python = root .. "/" .. venv .. "/bin/python"
+    if vim.fn.executable(python) == 1 then
+      return python
+    end
+  end
+  return nil
+end
+
 vim.lsp.config('pyright', {
   root_markers = { '.git', 'pyproject.toml', 'setup.py', 'requirements.txt', 'config.toml', '.venv' },
   settings = {
     python = {
+      pythonPath = find_venv_python(),
       analysis = {
         autoSearchPaths = true,
         useLibraryCodeForTypes = true,
