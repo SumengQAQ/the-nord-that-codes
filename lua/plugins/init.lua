@@ -85,7 +85,16 @@ return {
     "hedyhli/outline.nvim",
     cmd = { "Outline", "OutlineOpen" },
     keys = {
-      { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+      {
+        "<leader>o",
+        function()
+          local ok, err = pcall(vim.cmd, "Outline")
+          if not ok then
+            vim.notify("Outline cannot open in this window", vim.log.levels.INFO, { timeout = 1500 })
+          end
+        end,
+        desc = "Toggle outline",
+      },
     },
     opts = {
       outline_window = {
@@ -157,8 +166,9 @@ return {
           program = function()
             local buf = vim.api.nvim_get_current_buf()
             local path = vim.api.nvim_buf_get_name(buf)
-            if path == "" or vim.startswith(path, "[" ) then
-              path = vim.fn.expand "%:p"
+            if path == "" or vim.startswith(path, "[") then
+              local fallback = vim.fn.expand "%:p"
+              path = (fallback ~= "" and fallback) or vim.fn.input("File path: ", vim.fn.getcwd() .. "/", "file")
             end
             return path
           end,

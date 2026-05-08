@@ -53,7 +53,7 @@
 
 | 插件              | 作用                                     |
 | ----------------- | ---------------------------------------- |
-| **CodeCompanion** | AI 聊天 / 行内提示 / Actions（DeepSeek） |
+| **CodeCompanion** | AI 聊天 / 行内提示 / Actions             |
 
 ### 🐛 调试 (DAP)
 
@@ -134,7 +134,7 @@
 ### 安装
 
 ```bash
-git clone https://github.com/sumeng/nvim-config ~/.config/nvim
+git clone https://github.com/SumengQAQ/the-nord-that-codes.git ~/.config/nvim
 nvim --headless "+Lazy! sync" +qa
 ```
 
@@ -233,9 +233,9 @@ nvim --headless "+Lazy! sync" +qa
 <details>
 <summary>点击展开</summary>
 
-![](https://private-user-images.githubusercontent.com/171399158/583709012-9d873d55-13c0-422f-8330-f634b1e08002.png)
-![](https://private-user-images.githubusercontent.com/171399158/583709014-bbb44cb2-e63e-47a2-934a-105a64f56fbc.png)
-![](https://private-user-images.githubusercontent.com/171399158/583709013-9131c6a8-99de-4cec-ad3b-77a04f6ca7c4.png)
+![]https://pic3.zhimg.com/80/v2-ab7110ef1c2eb582b69a9dd84104f6ca_1440w.webp)
+![]https://pic3.zhimg.com/80/v2-dc9034e5bf2da75a294adb2b2d1831aa_1440w.webp)
+![](https://pic2.zhimg.com/80/v2-e035f8f8bc12eb8910f8104a859e2d29_1440w.webp)
 
 </details>
 
