@@ -126,7 +126,7 @@
 
 ### 前置要求
 
-- Neovim >= 0.10
+- Neovim >= 0.11
 - [NvChad](https://github.com/NvChad/NvChad)
 - （WSL）`im-select.exe` 放在 `C:\Windows\System32\`
 - （WSL）安装 `lazygit`、`prettierd`

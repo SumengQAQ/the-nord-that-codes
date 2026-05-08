@@ -168,10 +168,8 @@ pcall(vim.keymap.del, "n", "<leader><")
 -- Git 操作
 -- 已移至上面统一的 pcall 删除块
 map("n", "<leader>gs", "<cmd>Telescope git_status<CR>", { desc = "git status" })
-map("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "git terminal" })
 map("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", { desc = "git commits" })
 map("n", "<leader>gb", "<cmd>Telescope git_branches<CR>", { desc = "git branches" })
-map("n", "<leader>gd", "<cmd>DiffviewOpen<CR>", { desc = "git diff view" })
 map("n", "<leader>gl", "<cmd>Telescope git_log<CR>", { desc = "git log" })
 
 -- which-key 分组描述

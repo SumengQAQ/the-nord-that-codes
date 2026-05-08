@@ -77,9 +77,4 @@ for server, config in pairs(line_length_settings) do
   pcall(vim.lsp.config, server, config)
 end
 
--- venv-lsp 自动检测虚拟环境
-require("venv-lsp").setup({
-  disable_auto_venv = false,
-})
-
 -- read :h vim.lsp.config for changing options of lsp servers 

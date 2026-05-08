@@ -120,9 +120,9 @@ return {
   -- Python虚拟环境检测
   {
     "jglasovic/venv-lsp.nvim",
-    config = function()
-      require("venv-lsp").setup()
-    end,
+    opts = {
+      disable_auto_venv = false,
+    },
   },
 
   -- 异步库
@@ -925,7 +925,6 @@ return {
   {
     "folke/noice.nvim",
     event = "VeryLazy",
-    event = "VeryLazy",
     dependencies = {
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
@@ -991,9 +990,9 @@ return {
     "mistweaverco/kulala.nvim",
     ft = "http",
     keys = {
-      { "<leader>R", "<cmd>lua require('kulala').run()<CR>", desc = "Send HTTP request", ft = "http" },
-      { "<leader>RA", "<cmd>lua require('kulala').run_all()<CR>", desc = "Send all requests", ft = "http" },
-      { "<leader>RC", "<cmd>lua require('kulala').close()<CR>", desc = "Close response window", ft = "http" },
+      { "<leader>R", "<cmd>lua require('kulala').run()<CR>", desc = "Send HTTP request" },
+      { "<leader>RA", "<cmd>lua require('kulala').run_all()<CR>", desc = "Send all requests" },
+      { "<leader>RC", "<cmd>lua require('kulala').close()<CR>", desc = "Close response window" },
     },
     config = function()
       require("kulala").setup {
