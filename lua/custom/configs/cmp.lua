@@ -23,6 +23,11 @@ nvchad_cmp.sources = {
   { name = "buffer", priority = 50 },
 }
 
+-- 禁用自动签名帮助（在函数内按(时不自动弹出参数提示）
+nvchad_cmp.experimental = {
+  ghost_text = false,
+}
+
 -- 限制补全窗口最多显示10条，隐藏滚动条
 nvchad_cmp.window = {
   completion = {

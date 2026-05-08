@@ -19,6 +19,9 @@ M.ui = {
     theme = "vscode_colored",
     separator_style = "default",
   },
+  lsp = {
+    signature = true,
+  },
 }
 
 M.nvdash = {
