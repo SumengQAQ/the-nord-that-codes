@@ -8,6 +8,10 @@ local M = {}
 M.base46 = {
   theme = "nord",
   transparency = true,
+  hl_override = {
+    LineNr = { fg = "#88C0D0" },
+    CursorLineNr = { fg = "#D8DEE9", bold = true },
+  },
 }
 
 M.ui = {
@@ -34,6 +38,18 @@ M.term = {
 
 vim.schedule(function()
   vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+  vim.api.nvim_set_hl(0, "LineNr", { fg = "#88C0D0" })
+  vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#D8DEE9", bold = true })
 end)
+
+vim.defer_fn(function()
+  vim.cmd("set number")
+  vim.cmd("set relativenumber")
+  vim.cmd("highlight Comment guifg=#81A1C1 gui=italic")
+  vim.cmd("highlight @comment guifg=#81A1C1 gui=italic")
+  vim.cmd("highlight @comment.todo guifg=#81A1C1 gui=italic")
+  vim.cmd("highlight @comment.warning guifg=#81A1C1 gui=italic")
+  vim.cmd("redraw!")
+end, 5000)
 
 return M
