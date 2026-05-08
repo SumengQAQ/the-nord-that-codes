@@ -4,14 +4,14 @@ local options = {
     python = { "ruff_format" },
     c = { "clang-format" },
     cpp = { "clang-format" },
-    javascript = { "prettierd" },
-    javascriptreact = { "prettierd" },
-    typescript = { "prettierd" },
-    typescriptreact = { "prettierd" },
-    json = { "prettierd" },
-    html = { "prettierd" },
-    css = { "prettierd" },
-    markdown = { "prettierd" },
+    javascript = { "prettier" },
+    javascriptreact = { "prettier" },
+    typescript = { "prettier" },
+    typescriptreact = { "prettier" },
+    json = { "prettier" },
+    html = { "prettier" },
+    css = { "prettier" },
+    markdown = {},
   },
 
   formatters = {
@@ -25,10 +25,11 @@ local options = {
       args = { "--assume-filename", "$FILENAME", "--style={BasedOnStyle: llvm, ColumnLimit: 120}" },
       stdin = true,
     },
-    prettierd = {
-      command = "prettierd",
-      args = { "$FILENAME", "--print-width", "120" },
-      stdin = true,
+    prettier = {
+      command = "npx",
+      args = { "prettier", "--write", "--print-width", "120", "$FILENAME" },
+      stdin = false,
+      timeout_ms = 3000,
     },
   },
 

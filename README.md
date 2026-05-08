@@ -233,8 +233,8 @@ nvim --headless "+Lazy! sync" +qa
 <details>
 <summary>点击展开</summary>
 
-![]https://pic3.zhimg.com/80/v2-ab7110ef1c2eb582b69a9dd84104f6ca_1440w.webp)
-![]https://pic3.zhimg.com/80/v2-dc9034e5bf2da75a294adb2b2d1831aa_1440w.webp)
+![](https://pic3.zhimg.com/80/v2-ab7110ef1c2eb582b69a9dd84104f6ca_1440w.webp)
+![](https://pic3.zhimg.com/80/v2-dc9034e5bf2da75a294adb2b2d1831aa_1440w.webp)
 ![](https://pic2.zhimg.com/80/v2-e035f8f8bc12eb8910f8104a859e2d29_1440w.webp)
 
 </details>
