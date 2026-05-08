@@ -22,6 +22,12 @@ function M.apply_nord_borders()
     bg = nord_dark_bg,
   })
   
+  -- 把注释颜色改亮（Nord默认#616E88太暗了）
+  vim.api.nvim_set_hl(0, "Comment", {
+    fg = "#81A1C1",
+    italic = true,
+  })
+
   -- 可选：设置其他相关的高亮
   vim.api.nvim_set_hl(0, "PmenuSel", {
     fg = nord_dark_bg,

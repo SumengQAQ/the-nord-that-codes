@@ -25,7 +25,7 @@ vim.lsp.enable(servers)
 
 -- 同步行宽 120
 for _, server in ipairs(servers) do
-  local ok, client = pcall(vim.lsp.get_active_clients, { name = server })
+  local ok, client = pcall(vim.lsp.get_clients, { name = server })
   if ok and client and #client > 0 then
     vim.api.nvim_buf_set_option(0, "textwidth", 120)
   end

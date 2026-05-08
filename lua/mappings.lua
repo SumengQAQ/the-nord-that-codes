@@ -11,7 +11,7 @@ map("i", "jk", "<ESC>")
 map("n", "<leader><", "<<", { desc = "deindent line" })
 
 -- Windows 风格快捷键
--- 全选
+-- 全选（gg=到文件头，VG=选到文件尾，y=复制，然后回来）
 map("n", "<C-a>", "gg0vG$y", { desc = "select all" })
 map("i", "<C-a>", "<Esc>gg0vG$y", { desc = "select all" })
 

@@ -43,13 +43,23 @@ vim.schedule(function()
 end)
 
 vim.defer_fn(function()
-  vim.cmd("set number")
-  vim.cmd("set relativenumber")
   vim.cmd("highlight Comment guifg=#81A1C1 gui=italic")
   vim.cmd("highlight @comment guifg=#81A1C1 gui=italic")
   vim.cmd("highlight @comment.todo guifg=#81A1C1 gui=italic")
   vim.cmd("highlight @comment.warning guifg=#81A1C1 gui=italic")
   vim.cmd("redraw!")
 end, 5000)
+
+-- 进入普通文件 buffer 时自动设置行号
+vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
+  pattern = "*",
+  callback = function()
+    local ft = vim.bo.filetype
+    if ft ~= "dashboard" and ft ~= "neo-tree" and ft ~= "NvimTree" then
+      vim.wo.number = true
+      vim.wo.relativenumber = true
+    end
+  end,
+})
 
 return M
