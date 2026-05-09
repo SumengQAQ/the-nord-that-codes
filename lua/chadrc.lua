@@ -65,4 +65,13 @@ vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
   end,
 })
 
+-- 浮动窗口不显示行号
+vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = "conform-info://*",
+  callback = function()
+    vim.wo.number = false
+    vim.wo.relativenumber = false
+  end,
+})
+
 return M

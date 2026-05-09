@@ -450,9 +450,9 @@ return {
       vim.notify = notify
 
       notify.setup {
-        stages = "fade_in_slide_out", -- 动画效果
-        timeout = 3000, -- 显示3秒
-        background_colour = "#2E3440", -- Nord背景色
+        stages = "fade_in_slide_out",
+        timeout = 3000,
+        background_colour = "#2E3440",
         icons = {
           ERROR = "",
           WARN = "",
@@ -463,6 +463,8 @@ return {
         level = vim.log.levels.INFO,
         render = "default",
         top_down = true,
+        minimum_width = 50,
+        max_width = 80,
       }
     end,
   },
