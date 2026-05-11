@@ -58,19 +58,28 @@ vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
   pattern = "*",
   callback = function()
     local ft = vim.bo.filetype
+    local win_width = vim.api.nvim_win_get_width(0)
+    -- 分屏窗口（宽度 < 80 列）不显示行号
     if ft ~= "dashboard" and ft ~= "neo-tree" and ft ~= "NvimTree" then
-      vim.wo.number = true
-      vim.wo.relativenumber = true
+      if win_width < 80 then
+        vim.wo.number = false
+        vim.wo.relativenumber = false
+      else
+        vim.wo.number = true
+        vim.wo.relativenumber = true
+      end
     end
   end,
 })
 
 -- 浮动窗口不显示行号
-vim.api.nvim_create_autocmd("BufReadPost", {
-  pattern = "conform-info://*",
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*",
   callback = function()
-    vim.wo.number = false
-    vim.wo.relativenumber = false
+    if vim.bo.filetype ~= "" and vim.bo.filetype ~= "lua" and vim.bo.buftype == "nofile" then
+      vim.wo.number = false
+      vim.wo.relativenumber = false
+    end
   end,
 })
 
