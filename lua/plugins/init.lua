@@ -1010,23 +1010,6 @@ return {
     end,
   },
 
-  -- translate.nvim — 中英互译（变量名翻译神器）
-  {
-    "niuiic/translate.nvim",
-    keys = {
-      { "<leader>t", "<cmd>Translate<CR>", desc = "翻译选中文字" },
-    },
-    config = function()
-      require("translate").setup {
-        -- 默认源语言 auto，目标语言 zh（中文）
-        default = {
-          source = "auto",
-          target = "zh",
-        },
-      }
-    end,
-  },
-
   -- ========== 中英文输入法自动切换 (WSL + Windows 输入法) ==========
   {
     "keaising/im-select.nvim",
